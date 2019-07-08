@@ -1,6 +1,2 @@
-# Generated site (transformed by Jekyll)
-_site
+_site/
 
-# Bundler configuration & artifacts
-.bundle/config
-Gemfile.lock

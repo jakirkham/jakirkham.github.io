@@ -1,229 +1,31 @@
-# jekyll-reveal.js
+A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.txt.
 
-A Jekyll-based framework for creating presentations based on Reveal.js and Markdown.
+I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.
 
-- [Introduction](#introduction)
-- [Howto](#howto)
-- [Slide filenames](#slide-filenames)
-- [Configuring the presentation](#configuring-the-presentation)
-  - [Specifying reveal options and dependencies](#specifying-reveal-options-and-dependencies)
-- [Custom reveal.js themes](#custom-revealjs-themes)
-- [Markdown extensions and simplification](#markdown-extensions-and-simplification)
-  - [Multiple slides](#multiple-slides)
-  - [Vertical slides](#vertical-slides)
-  - [Fragments](#fragments)
-  - [Slide backgrounds](#slide-backgrounds)
-  - [Speaker notes](#speaker-notes)
+### Note: if you are using this repo and now get a notification about a security vulnerability, delete the Gemfile.lock file. 
 
-## Introduction
+# Instructions
 
-If you like [Reveal.js][] for creating your online presentations, like the site management [Jekyll][] gives you and like [Markdown][] because of its easy and clean look, here's an easy way to create a presentation using Jekyll, Markdown and Reveal.js.
+1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
+1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
+1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
+1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
+1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
+1. Check status by going to the repository settings, in the "GitHub pages" section
+1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
 
-See the [example presentation][] created using the contents in this repository and `jekyll build` or `docker-compose up`.
+See more info at https://academicpages.github.io/
 
-## Howto
+## To run locally (not on GitHub Pages, to serve on your own computer)
 
-First, [install Jekyll][]. After that, clone this repository and create a branch for your new presentation:
+1. Clone the repository and made updates as detailed above
+1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
+1. Run `bundle clean` to clean up the directory (no need to run `--force`)
+1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
+1. Run `bundle exec jekyll liveserve` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
 
-    git clone --recursive https://github.com/dploeger/jekyll-revealjs.git
-    git checkout -b presentation1
+# Changelog -- bugfixes and enhancements
 
-Clean the Example presentation:
+There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
 
-    git rm _posts/*
-    mkdir _posts
-
-After that, add your slides into the `_posts` subdirectory in clean Markdown syntax and you're ready to build your presentation with Jekyll:
-
-    jekyll build
-
-If you don’t have Jekyll installed (but you do have Docker) then you can just run the following to build and serve your changes using a container. Hit `ctrl-c` to stop the process.
-
-     docker-compose up
-
-You can even manage multiple presentations using the power of Git. Simply branch from the master branch to create a new presentation:
-
-    git checkout master
-    git branch presentation2
-    git checkout presentation2
-
-## Slide filenames
-
-Because we're using Jekyll [posts][] to easily gather the slides for the presentation, we use their filename conventions with the following syntax:
-
-    <year>-<month>-<day>-<title>.md
-
-We recommend naming the files like
-
-    0000-01-01-welcome.md
-    0000-01-02-topics.md
-
-and so forth.
-
-Jekyll will assume that each post has been made on the first of January, 2001 (which is of no interest for a presentation). The additional number is for sorting purposes. After that comes a title to identify the specific slide (which is actually only for the presentation author, Jekyll doesn't care about it).
-
-## Configuring the presentation
-
-You can configure almost any reveal.js setting using the `_config.yml` settings file in the root directory.
-
-- `title`: The title of your presentation (displayed in the browser's title bar, optional and defaults to your repository’s name thanks to the `jekyll-github-metadata` plugin)
-- `description`: A description for your presentation (displayed in the HTML head, optional and defaults to your repository’s description thanks to the `jekyll-github-metadata` plugin)
-- `author`: Your name (displayed in the HTML head)
-- `reveal_theme`: The reveal.js-theme to use [default.css]
-- `reveal_transition`: The reveal.js-transition to use [default]
-- `reveal_theme_path`: The path to the reveal.js-theme (can be changed for custom themes) [reveal.js/css/theme/]
-- `reveal_notes_server`: Whether to support the speaker notes server [false (only local speaker notes)]
-- `reveal_options`: Additional reveal.js [options][]
-
-- `reveal_dependencies`: Additional reveal.js [dependencies][]
-- `reveal_path`: Path to the reveal.js-installation [reveal.js]
-
-You can also further customize the presentation:
-
-- `extra_css`: Additional CSS files added after the reveal [theme][]
-- `highlight_style_sheet`: CSS theme for highlight.js [reveal.js/lib/css/zenburn.css](reveal.js/lib/css/zenburn.css)
-
-### Specifying reveal options and dependencies
-
-`reveal_options` can be either a list of strings specifying the JavaScript options, e.g.:
-
-```yaml
-reveal_options:
-  - 'width: "960px"'
-  - 'height: "720px"'
-```
-
-or, as a convenience, it can be a mapping of options to their values:
-
-```yaml
-reveal_options:
-  width: 960px
-  height: 720px
-```
-
-Note that if a mapping is passed, the values will be inserted into the final JavaScript as quoted strings. If this is unacceptable (for example, if you want to pass a Boolean parameter that takes `true` or `false`), specify a list of strings.
-
-`reveal_dependencies` takes a list of strings representing the JavaScript to specify a dependency [as you would in reveal.js](https://github.com/hakimel/reveal.js/#dependencies), for example:
-
-```yaml
-reveal_dependencies:
-  # Speaker notes
-  - "{ src: 'path/to/plugin.js', async: true },"
-```
-
-## Custom reveal.js themes
-
-If you want to use your custom reveal.js theme, we recommend adding a directory `theme`, putting the file(s) there and referencing that directory in the configuration `reveal_theme_path`.
-
-Don't mess with the `reveal.js` subdirectory as it is a submodule and doesn't adhere to your repository's branches.
-
-## Markdown extensions and simplification
-
-Reveal.js already includes a Markdown interpreter, which we use for **jekyll-reveal.js**. We have already configured it and included some simplification just for you!
-
-### Multiple slides
-
-To use multiple slides in one slide file, use a newline, three dashes and another newline like this:
-
-```markdown
-# Slide 1
-
-This is the content of Slide 1
-
----
-
-# Slide 2
-
-This is the content of Slide 2
-```
-
-### Vertical slides
-
-To use vertical slides, do the same, but use two dashes:
-
-```markdown
-# Slide 1
-
-This is the content of Slide 1
-
---
-
-And this is a vertical slide below Slide 1
-```
-
-### Fragments
-
-Fragments allow slide elements to come one by one. This is often used in lists to subsequently show fragments of a list during a presentation.
-
-**jekyll-reveal.js** simplifies the reveal.js syntax. To specify the current element as a fragment, use `<fragment/>` like this:
-
-```markdown
-# Slide
-
-- This <fragment/>
-- will <fragment/>
-- come one by one <fragment/>
-```
-
-Or, if you find it cleaner, like this:
-
-```markdown
-# Slide
-
-+ This
-+ will
-+ come one by one
-```
-
-### Slide backgrounds
-
-To modify the background of the current slide, **jekyll-reveal.js** simplifies the syntax to `<background>color</background>`:
-
-```markdown
-# Slide
-
-<background>white</background>
-
-This slide has a white background
-```
-
-#### Image backgrounds
-
-You can also set image backgrounds:
-
-```markdown
-
-# Slide
-
-<backgroundimage>{{ site.github.url }}/images/image.jpg</backgroundimage>
-<backgroundimageopacity>0.25</backgroundimageopacity>
-
-This slide has an image background
-
-```
-
-Note: `{{ site.github.url }}` expands to the URL of your hosted site, but you could also use remote URLs.
-
-### Speaker notes
-
-To include speaker notes, add `Note:` on a separate line and write your notes below:
-
-```markdown
-# Slide
-
-Some slide content
-
-Note:
-
-This is only displayed in the speaker notes.
-```
-
-[reveal.js]: http://lab.hakim.se/reveal-js/#/
-[jekyll]: http://jekyllrb.com/
-[markdown]: http://daringfireball.net/projects/markdown/
-[example presentation]: http://dploeger.github.io/jekyll-revealjs/example
-[install jekyll]: http://jekyllrb.com/docs/installation/
-[options]: https://github.com/hakimel/reveal.js#configuration
-[dependencies]: https://github.com/hakimel/reveal.js#dependencies
-[posts]: https://jekyllrb.com/docs/posts/#creating-posts
-[theme]: https://github.com/hakimel/reveal.js#theming
+To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
