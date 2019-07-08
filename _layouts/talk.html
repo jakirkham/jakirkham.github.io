@@ -36,6 +36,7 @@ layout: default
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
         {% endif %}
         {% if page.talk_type %}<p>{{page.talk_type}} at {{ page.venue }},  {{page.location}} {% endif %}
+	<p class="page__slides"><strong><i class="fab fa-slideshare" aria-hidden="true"></i>Slides:</strong> <a href="{{ page.slides }}">nbviewer</a></p>
 
         </header>
       {% endunless %}
