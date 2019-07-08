@@ -4,3 +4,6 @@
 [submodule "_talks/git_ready"]
 	path = _talks/git_ready
 	url = https://github.com/jakirkham/git_ready
+[submodule "_talks/2019-parallel-python"]
+	path = _talks/2019-parallel-python
+	url = https://github.com/jakirkham/2019-parallel-python
