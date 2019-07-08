@@ -133,7 +133,7 @@ exclude:
   - Capfile
   - Gemfile
   - Gruntfile.js
-  - LICENSE
+  - LICENSE.txt
   - README
   - Rakefile
   - assets/js/_main.js
