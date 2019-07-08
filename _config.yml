@@ -134,7 +134,7 @@ exclude:
   - Gemfile
   - Gruntfile.js
   - LICENSE.txt
-  - README
+  - README.md
   - Rakefile
   - assets/js/_main.js
   - assets/js/plugins
